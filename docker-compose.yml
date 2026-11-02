@@ -1,0 +1,92 @@
+services:
+  mysql:
+    image: mysql:8.0.36
+    container_name: zs-mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_DATABASE: "hmdp"
+      TZ: "Asia/Shanghai"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      # hmdp.sql 含 MySQL 5.6 的零日期 DDL，关闭严格模式以兼容导入
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
+    volumes:
+      - zs-mysql-data:/var/lib/mysql
+      - ./src/main/resources/db/hmdp.sql:/docker-entrypoint-initdb.d/01-hmdp.sql:ro
+      - ./src/main/resources/db/seckill_p3.sql:/docker-entrypoint-initdb.d/02-seckill-p3.sql:ro
+      - ./src/main/resources/db/seckill_p6.sql:/docker-entrypoint-initdb.d/03-seckill-p6.sql:ro
+      - ./src/main/resources/db/zs_p1.sql:/docker-entrypoint-initdb.d/04-zs-p1.sql:ro
+      - ./src/main/resources/db/zs_p1_seed.sql:/docker-entrypoint-initdb.d/05-zs-p1-seed.sql:ro
+      - ./src/main/resources/db/zs_p2_synthetic.sql:/docker-entrypoint-initdb.d/06-zs-p2-synthetic.sql:ro
+      - ./src/main/resources/db/zs_p3.sql:/docker-entrypoint-initdb.d/07-zs-p3.sql:ro
+      - ./src/main/resources/db/zs_p4.sql:/docker-entrypoint-initdb.d/08-zs-p4.sql:ro
+      - ./src/main/resources/db/zs_p5.sql:/docker-entrypoint-initdb.d/09-zs-p5.sql:ro
+      - ./src/main/resources/db/zs_p6.sql:/docker-entrypoint-initdb.d/10-zs-p6.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: zs-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - zs-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.4
+    container_name: zs-es
+    ports:
+      # 9200 在本机被 Cpolar 占用，映射到 9201
+      - "9201:9200"
+    environment:
+      discovery.type: "single-node"
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms${ES_HEAP:-512m} -Xmx${ES_HEAP:-512m}"
+      TZ: "Asia/Shanghai"
+    volumes:
+      - zs-es-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+
+  embedding:
+    build:
+      context: ./embedding-service
+    container_name: zs-embedding
+    ports:
+      - "8090:8090"
+    mem_limit: 512m
+    environment:
+      HF_ENDPOINT: https://hf-mirror.com
+      EMBEDDING_MODEL: BAAI/bge-small-zh-v1.5
+    volumes:
+      - zs-hf-cache:/root/.cache/huggingface
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health')\""]
+      interval: 30s
+      timeout: 5s
+      retries: 20
+      start_period: 120s
+
+volumes:
+  zs-mysql-data:
+  zs-redis-data:
+  zs-es-data:
+  zs-hf-cache:

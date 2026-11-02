@@ -1,0 +1,258 @@
+  server:
+    port: 8081
+  spring:
+    rabbitmq:
+      listener:
+        simple:
+          auto-startup: true
+          acknowledge-mode: manual
+          concurrency: 5
+          prefetch: 10
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
+      # 连接超时，避免 broker 不可用时请求线程长时间阻塞
+      connection-timeout: 3s
+      # 开启 publisher confirm：broker 收到消息后会回调确认结果
+      publisher-confirm-type: correlated
+      # 开启 return：消息无法路由时退回给生产者，而不是被悄悄丢弃
+      publisher-returns: true
+      template:
+        mandatory: true
+    application:
+      name: hmdp
+    datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/hmdp?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      username: root
+      password: 123456
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+      lettuce:
+        pool:
+          max-active: 30
+          max-idle: 15
+          min-idle: 5
+          time-between-eviction-runs: 10s
+    jackson:
+      default-property-inclusion: non_null # JSON处理时忽略非空字段
+    elasticsearch:
+      # 阶段 2：ES 8.11.4，Docker 映射到 9201
+      uris: http://127.0.0.1:9201
+      connection-timeout: 3s
+      socket-timeout: 10s
+  mybatis-plus:
+    type-aliases-package: com.hmdp.entity # 别名扫描包
+  logging:
+    level:
+      com.hmdp: debug
+    pattern:
+      console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%X{traceId:-}] %logger{36} - %msg%n"
+  management:
+    health:
+      # 秒杀默认走 Redis Stream，未部署 RabbitMQ，关闭其健康检查避免 /actuator/health 阻塞
+      rabbit:
+        enabled: false
+      # 阶段 2：ES 8.11.4 已在 9201 启动，开启健康检查
+      elasticsearch:
+        enabled: true
+    endpoints:
+      web:
+        exposure:
+          include: health,info,metrics,prometheus
+    metrics:
+      tags:
+        application: hmdp
+  hmdp:
+    admin:
+      # 管理端简单鉴权：请求头 X-Admin-Token 必须与此值一致
+      token: ${HMDP_ADMIN_TOKEN:zs-admin-local}
+    geo:
+      # 启动时从 DB 重建 shop:geo:{typeId} 与 act:geo:{city}
+      preload-on-startup: true
+    es:
+      index-alias: activity_index
+      index-initial-version: v1
+    embedding:
+      # 独立 Python FastAPI 服务，sentence-transformers + bge-small-zh-v1.5
+      url: http://127.0.0.1:8090
+      dim: 512
+      # 低内存开发机：重建时批量 4，避免 embedding 进程 CPU 内存不足
+      batch-size: 4
+      connect-timeout-ms: 500
+      read-timeout-ms: 8000
+    search:
+      lexical-top-n: 50
+      vector-top-n: 50
+      # 搜索在线 query embedding 硬超时；超时纯倒排降级
+      embedding-timeout-ms: 200
+      hot-decay-interval-ms: 600000
+      hot-decay-factor: 0.9
+      index-consumer:
+        # 同一 activityId hash 到固定分区，保证单文档顺序
+        partitions: 4
+        queue-capacity: 100
+        keep-alive-seconds: 60
+        pending-scan-interval-ms: 30000
+    follow:
+      # 启动时从 tb_follow 重建 follows:{userId}
+      rebuild-on-startup: true
+    recommend:
+      # 20 并发 × 5 路召回需要 100 个并行任务；core=20 保证首波不排队
+      recall-core-pool-size: 20
+      recall-max-pool-size: 40
+      recall-queue-capacity: 200
+      exposure-cache-ttl-seconds: 5
+      exposure-cache-max-size: 20000
+      recall-timeout-ms: 50
+      # <=0 时 VECTOR 复用 recall-timeout-ms；ES kNN 抖动环境可单独放宽（如 150）
+      vector-timeout-ms: 0
+      coarse-top-n: 100
+      fine-top-n: 100
+      feed-page-size: 10
+      max-page-size: 50
+      l1-ttl-seconds: 30
+      l2-ttl-seconds: 300
+      l1-max-size: 10000
+      interest-ttl-seconds: 86400
+      behavior-days: 7
+      cold-start-threshold: 1
+      hot-limit: 200
+      tag-limit: 200
+      geo-limit: 100
+      # ES kNN k=100 在开发机 36~148ms，超出单路 50ms；降到 50 保证在线可用（可回滚）
+      vector-top-n: 50
+      follow-limit: 100
+      curated-limit: 100
+      geo-radius-km: 50
+      exposed-penalty: 0.5
+      vector-enabled: true
+      source-normalize: true
+      coarse-tag-quota: 30
+      coarse-follow-quota: 10
+      category-max-consecutive: 2
+      shop-max-consecutive: 1
+      source-follow: 1.0
+      source-vector: 0.9
+      source-tag: 0.8
+      source-hot: 0.7
+      source-geo: 0.6
+      source-curated: 0.5
+      fine-ctr: 0.15
+      fine-dwell: 0.0
+      fine-quality: 0.13
+      fine-freshness: 0.12
+      fine-geo: 0.15
+      fine-tag: 0.28
+      fine-category-ctr: 0.17
+      event-stream: rec:event:stream
+      event-group: rec:event:group
+      event-dead: rec:event:dead
+      event-consumer-enabled: true
+      event-pending-scan-ms: 30000
+      stats-aggregate-cron: "0 5 0 * * ?"
+    ad:
+      enabled: true
+      slot-position-a: 3
+      slot-position-b: 6
+      auction-timeout-ms: 50
+      max-candidates: 100
+      default-daily-frequency: 3
+      default-min-interval-seconds: 300
+      anonymous-ip-daily-frequency: 10
+      budget-daily-ttl-seconds: 172800
+      ctr-min: 0.001
+      ctr-max: 0.9
+      ctr-prior: 0.02
+      ctr-category-weight: 0.45
+      ctr-user-category-weight: 0.30
+      ctr-quality-weight: 0.15
+      ctr-bid-weight: 0.10
+      conversion-window-seconds: 86400
+      conversion-scan-ms: 60000
+      index-embedding-rate-per-second: 10
+      index-consumer-partitions: 2
+      index-consumer-queue-capacity: 100
+      index-embedding-timeout-ms: 2000
+      ad-recall-core-pool-size: 10
+      ad-recall-max-pool-size: 20
+      ad-recall-queue-capacity: 100
+      ad-bid-core-pool-size: 20
+      ad-bid-max-pool-size: 40
+      ad-bid-queue-capacity: 200
+      ad-index-core-pool-size: 2
+      ad-index-max-pool-size: 4
+      ad-index-queue-capacity: 200
+      ad-event-core-pool-size: 2
+      ad-event-max-pool-size: 8
+      ad-event-queue-capacity: 500
+      rate-limit-enabled: true
+      rate-limit-per-second: 100
+    profile:
+      enabled: true
+      behavior-days: 7
+      aggregate-interval-ms: 21600000
+      # 启动后延迟 5min 再扫描，避免启动风暴抢占搜索/推荐压测资源
+      aggregate-initial-delay-ms: 300000
+      # 生产填 OpenAI-compatible /chat/completions；本地为空走结构化降级
+      llm-url: ${HMDP_PROFILE_LLM_URL:}
+      llm-model: ${HMDP_PROFILE_LLM_MODEL:profile-llm-local}
+      prompt-version: profile-prompt-v1
+      llm-timeout-ms: 3000
+      max-retry: 1
+      rate-per-second: 10
+      executor-core-size: 2
+      executor-max-size: 8
+      executor-queue-capacity: 1000
+      max-events-per-user: 500
+      max-tags: 12
+    seckill:
+      # 库存分段数上限；实际段数会按库存下调
+      segment-count: 16
+      # 启动时是否从 DB 预热库存分段
+      init-on-startup: true
+      # meta/库存 key 在活动结束后的保留时间（秒）
+      meta-ttl-buffer-seconds: 86400
+      # 消息模式：stream（Lua 内原子 XADD）或 rabbit
+      mq: stream
+      stream:
+        stream-key: seckill:orders:stream
+        group: seckill:orders:group
+        dead-key: seckill:orders:dead
+        concurrency: 4
+        batch-size: 10
+        block-millis: 2000
+        pending-min-idle-seconds: 30
+        pending-scan-interval-ms: 30000
+        max-retry: 3
+        max-len: 1000000
+      consumer:
+        core-pool-size: 8
+        max-pool-size: 32
+        queue-capacity: 2000
+        keep-alive-seconds: 60
+        dynamic-enabled: true
+        adjust-interval-ms: 5000
+        queue-high-watermark: 0.8
+        queue-low-watermark: 0.2
+        min-core-pool-size: 4
+        max-pool-limit: 64
+        backpressure-sleep-millis: 100
+      reconcile:
+        enabled: true
+        interval-ms: 60000
+    rate-limit:
+      enabled: true
+      ttl-seconds: 60
+      user:
+        capacity: 10
+        refill-rate: 5
+      ip:
+        capacity: 50
+        refill-rate: 20
+      api:
+        capacity: 100
+        refill-rate: 50

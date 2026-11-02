@@ -1,0 +1,31 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "refresh_interval": "1s"
+  },
+  "mappings": {
+    "properties": {
+      "id":          { "type": "long" },
+      "title":       { "type": "text", "analyzer": "standard",
+                       "fields": { "keyword": { "type": "keyword", "ignore_above": 256 } } },
+      "subTitle":    { "type": "text", "analyzer": "standard" },
+      "description": { "type": "text", "analyzer": "standard" },
+      "images":      { "type": "keyword", "index": false },
+      "tags":        { "type": "keyword" },
+      "categoryId":  { "type": "long" },
+      "shopId":      { "type": "long" },
+      "activityType":{ "type": "byte" },
+      "city":        { "type": "keyword" },
+      "area":        { "type": "keyword" },
+      "location":    { "type": "geo_point" },
+      "beginTime":   { "type": "date", "format": "epoch_millis" },
+      "endTime":     { "type": "date", "format": "epoch_millis" },
+      "status":      { "type": "byte" },
+      "qualityScore":{ "type": "integer" },
+      "payValue":    { "type": "long" },
+      "originalPrice": { "type": "long" },
+      "embedding":   { "type": "dense_vector", "dims": 512, "index": true, "similarity": "cosine" }
+    }
+  }
+}

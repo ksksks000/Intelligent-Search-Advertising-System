@@ -1,0 +1,554 @@
+[
+  {
+    "device": "b2-feed-1",
+    "wall": 491.9,
+    "costMs": 368,
+    "degraded": [
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 2,
+      "profile": 66,
+      "recall.HOT": 49,
+      "recall.GEO": 0,
+      "recall.FOLLOW": 1,
+      "rerank": 0,
+      "fine.score": 84,
+      "fine.exposure": 63,
+      "fine": 99,
+      "coarse": 83,
+      "page": 0,
+      "coarse.db": 43,
+      "recall.VECTOR": 54,
+      "fine.stats": 10,
+      "total": 368
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-2",
+    "wall": 492.3,
+    "costMs": 367,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 7,
+      "profile": 66,
+      "recall.HOT": 64,
+      "recall.GEO": 13,
+      "recall.FOLLOW": 9,
+      "rerank": 1,
+      "fine.score": 82,
+      "fine.exposure": 62,
+      "fine": 97,
+      "coarse": 36,
+      "page": 0,
+      "coarse.db": 30,
+      "recall.VECTOR": 57,
+      "fine.stats": 9,
+      "total": 367
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-3",
+    "wall": 497.2,
+    "costMs": 371,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 0,
+      "profile": 66,
+      "recall.HOT": 59,
+      "recall.GEO": 0,
+      "recall.FOLLOW": 3,
+      "rerank": 0,
+      "fine.score": 89,
+      "fine.exposure": 66,
+      "fine": 98,
+      "coarse": 72,
+      "page": 1,
+      "coarse.db": 20,
+      "recall.VECTOR": 57,
+      "fine.stats": 9,
+      "total": 371
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-4",
+    "wall": 489.4,
+    "costMs": 369,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 6,
+      "profile": 65,
+      "recall.HOT": 57,
+      "recall.GEO": 2,
+      "recall.FOLLOW": 4,
+      "rerank": 0,
+      "fine.score": 85,
+      "fine.exposure": 70,
+      "fine": 95,
+      "coarse": 51,
+      "page": 0,
+      "coarse.db": 11,
+      "recall.VECTOR": 71,
+      "fine.stats": 10,
+      "total": 369
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-5",
+    "wall": 488.5,
+    "costMs": 370,
+    "degraded": [
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 0,
+      "profile": 66,
+      "recall.HOT": 60,
+      "recall.GEO": 0,
+      "recall.FOLLOW": 2,
+      "rerank": 0,
+      "fine.score": 91,
+      "fine.exposure": 60,
+      "fine": 103,
+      "coarse": 67,
+      "page": 0,
+      "coarse.db": 32,
+      "recall.VECTOR": 57,
+      "fine.stats": 7,
+      "total": 370
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-6",
+    "wall": 483.5,
+    "costMs": 375,
+    "degraded": [
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 0,
+      "profile": 66,
+      "recall.HOT": 43,
+      "recall.GEO": 0,
+      "recall.FOLLOW": 12,
+      "rerank": 1,
+      "fine.score": 92,
+      "fine.exposure": 84,
+      "fine": 100,
+      "coarse": 87,
+      "page": 0,
+      "coarse.db": 65,
+      "recall.VECTOR": 52,
+      "fine.stats": 8,
+      "total": 375
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-7",
+    "wall": 485.9,
+    "costMs": 371,
+    "degraded": [
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 2,
+      "profile": 65,
+      "recall.HOT": 47,
+      "recall.GEO": 0,
+      "recall.FOLLOW": 0,
+      "rerank": 0,
+      "fine.score": 85,
+      "fine.exposure": 67,
+      "fine": 100,
+      "coarse": 84,
+      "page": 0,
+      "coarse.db": 44,
+      "recall.VECTOR": 56,
+      "fine.stats": 6,
+      "total": 371
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-8",
+    "wall": 477.1,
+    "costMs": 369,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 6,
+      "profile": 66,
+      "recall.HOT": 56,
+      "recall.GEO": 16,
+      "recall.FOLLOW": 5,
+      "rerank": 2,
+      "fine.score": 86,
+      "fine.exposure": 66,
+      "fine": 93,
+      "coarse": 40,
+      "page": 0,
+      "coarse.db": 29,
+      "recall.VECTOR": 68,
+      "fine.stats": 6,
+      "total": 369
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-9",
+    "wall": 475.1,
+    "costMs": 373,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 11,
+      "profile": 65,
+      "recall.HOT": 61,
+      "recall.GEO": 27,
+      "recall.FOLLOW": 10,
+      "rerank": 1,
+      "fine.score": 92,
+      "fine.exposure": 85,
+      "fine": 102,
+      "coarse": 16,
+      "page": 0,
+      "coarse.db": 11,
+      "recall.VECTOR": 61,
+      "fine.stats": 8,
+      "total": 373
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-10",
+    "wall": 476.9,
+    "costMs": 369,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 8,
+      "profile": 66,
+      "recall.HOT": 53,
+      "recall.GEO": 19,
+      "recall.FOLLOW": 8,
+      "rerank": 3,
+      "fine.score": 88,
+      "fine.exposure": 72,
+      "fine": 95,
+      "coarse": 39,
+      "page": 0,
+      "coarse.db": 29,
+      "recall.VECTOR": 64,
+      "fine.stats": 7,
+      "total": 369
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-11",
+    "wall": 470.5,
+    "costMs": 357,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 2,
+      "profile": 57,
+      "recall.HOT": 57,
+      "recall.GEO": 6,
+      "recall.FOLLOW": 5,
+      "rerank": 2,
+      "fine.score": 81,
+      "fine.exposure": 68,
+      "fine": 92,
+      "coarse": 53,
+      "page": 0,
+      "coarse.db": 12,
+      "recall.VECTOR": 71,
+      "fine.stats": 9,
+      "total": 357
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-12",
+    "wall": 474.6,
+    "costMs": 358,
+    "degraded": [
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 6,
+      "profile": 57,
+      "recall.HOT": 47,
+      "recall.GEO": 0,
+      "recall.FOLLOW": 0,
+      "rerank": 0,
+      "fine.score": 89,
+      "fine.exposure": 61,
+      "fine": 101,
+      "coarse": 81,
+      "page": 0,
+      "coarse.db": 35,
+      "recall.VECTOR": 54,
+      "fine.stats": 7,
+      "total": 358
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-13",
+    "wall": 474.4,
+    "costMs": 360,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 5,
+      "profile": 57,
+      "recall.HOT": 57,
+      "recall.GEO": 11,
+      "recall.FOLLOW": 4,
+      "rerank": 0,
+      "fine.score": 88,
+      "fine.exposure": 79,
+      "fine": 102,
+      "coarse": 49,
+      "page": 0,
+      "coarse.db": 10,
+      "recall.VECTOR": 62,
+      "fine.stats": 6,
+      "total": 360
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-14",
+    "wall": 470.1,
+    "costMs": 349,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 5,
+      "profile": 49,
+      "recall.HOT": 66,
+      "recall.GEO": 11,
+      "recall.FOLLOW": 9,
+      "rerank": 1,
+      "fine.score": 84,
+      "fine.exposure": 71,
+      "fine": 97,
+      "coarse": 37,
+      "page": 2,
+      "coarse.db": 32,
+      "recall.VECTOR": 61,
+      "fine.stats": 7,
+      "total": 349
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-15",
+    "wall": 468.3,
+    "costMs": 347,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 7,
+      "profile": 49,
+      "recall.HOT": 62,
+      "recall.GEO": 19,
+      "recall.FOLLOW": 10,
+      "rerank": 0,
+      "fine.score": 86,
+      "fine.exposure": 61,
+      "fine": 96,
+      "coarse": 17,
+      "page": 0,
+      "coarse.db": 12,
+      "recall.VECTOR": 74,
+      "fine.stats": 7,
+      "total": 347
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-16",
+    "wall": 449.6,
+    "costMs": 345,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 6,
+      "profile": 36,
+      "recall.HOT": 58,
+      "recall.GEO": 2,
+      "recall.FOLLOW": 4,
+      "rerank": 1,
+      "fine.score": 88,
+      "fine.exposure": 82,
+      "fine": 102,
+      "coarse": 48,
+      "page": 0,
+      "coarse.db": 13,
+      "recall.VECTOR": 71,
+      "fine.stats": 9,
+      "total": 345
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-17",
+    "wall": 446.8,
+    "costMs": 332,
+    "degraded": [
+      "HOT",
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 0,
+      "profile": 34,
+      "recall.HOT": 62,
+      "recall.GEO": 0,
+      "recall.FOLLOW": 1,
+      "rerank": 1,
+      "fine.score": 86,
+      "fine.exposure": 75,
+      "fine": 98,
+      "coarse": 69,
+      "page": 0,
+      "coarse.db": 24,
+      "recall.VECTOR": 57,
+      "fine.stats": 10,
+      "total": 332
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-18",
+    "wall": 448.6,
+    "costMs": 332,
+    "degraded": [
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 7,
+      "profile": 34,
+      "recall.HOT": 50,
+      "recall.GEO": 5,
+      "recall.FOLLOW": 0,
+      "rerank": 2,
+      "fine.score": 88,
+      "fine.exposure": 74,
+      "fine": 97,
+      "coarse": 70,
+      "page": 0,
+      "coarse.db": 30,
+      "recall.VECTOR": 57,
+      "fine.stats": 6,
+      "total": 332
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-19",
+    "wall": 447.5,
+    "costMs": 331,
+    "degraded": [
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 0,
+      "profile": 30,
+      "recall.HOT": 53,
+      "recall.GEO": 0,
+      "recall.FOLLOW": 1,
+      "rerank": 2,
+      "fine.score": 85,
+      "fine.exposure": 73,
+      "fine": 101,
+      "coarse": 81,
+      "page": 0,
+      "coarse.db": 44,
+      "recall.VECTOR": 55,
+      "fine.stats": 8,
+      "total": 331
+    },
+    "cache": "MISS",
+    "items": 10
+  },
+  {
+    "device": "b2-feed-20",
+    "wall": 450.6,
+    "costMs": 330,
+    "degraded": [
+      "VECTOR"
+    ],
+    "stages": {
+      "recall.TAG": 2,
+      "profile": 29,
+      "recall.HOT": 49,
+      "recall.GEO": 0,
+      "recall.FOLLOW": 0,
+      "rerank": 1,
+      "fine.score": 89,
+      "fine.exposure": 65,
+      "fine": 100,
+      "coarse": 81,
+      "page": 0,
+      "coarse.db": 37,
+      "recall.VECTOR": 56,
+      "fine.stats": 7,
+      "total": 330
+    },
+    "cache": "MISS",
+    "items": 10
+  }
+]
